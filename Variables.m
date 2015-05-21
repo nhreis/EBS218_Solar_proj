@@ -89,6 +89,8 @@ Amb.rhoAir = 1.164; %Density air at 30C, kg/m^3 [WolframAlpha]
 Amb.vAir = 1.87E-5; %Dynamic viscosity of air at 30C, Pa s, [WolframAlpha]
 Amb.SolT = 0;       %Solar time
 Amb.SolAlt =0;      %Solar Altitude Angle, degrees
+Amb.nAir = 1;      %Index of refraction of air  [memoized, also Wikipedia agrees with me.]
+                        %Yes, it's temperature (density, actually) dependent, but I don't care that much.
 
 
 %% Set values to locate the sun based on time of day, tilt of collector, direction of collector.
