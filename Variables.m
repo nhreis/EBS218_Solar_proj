@@ -1,7 +1,7 @@
 %% Solar Collector Model, EBS 218 Spring Quarter, 2015
 
 %% Define Objects (Structs) to be passed to functions
-
+global Collect Ap Cp Wall Ply Foam Amb
 %Collector variables
 Collect.tilt = 0;   %Tile angle of the collector, degrees
 Collect.Az   =0;    %Azimuth angle of collector, degrees
