@@ -3,7 +3,7 @@
 %% Define Objects (Structs) to be passed to functions
 global Collect Ap Cp Wall Ply Foam Amb
 %Collector variables
-Collect.tilt = 0;   %Tile angle of the collector, degrees
+Collect.tilt = 15;   %Tile angle of the collector, degrees
 Collect.Az   =0;    %Azimuth angle of collector, degrees
 Collect.lat = 38.5;  %Latitude position of collector, degrees (Davis)
 Collect.lng = 121.7; %Collector longitude, degrees (Davis)
