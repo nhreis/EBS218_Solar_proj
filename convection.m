@@ -1,5 +1,5 @@
 
-function hc = convection(P,T,h,Vw,Amb,Ap)
+function hc = convection(P,T,h,Vw,d,w,Amb,Ap)
 
     %Inputs 
    %P,Initial air pressure, Pa
@@ -8,8 +8,8 @@ function hc = convection(P,T,h,Vw,Amb,Ap)
    %Vw,Wind Speed, m/s
 
    %Measuring Perimeters and Areas
-    Ad % Air Duct Area, m^2
-    Pd % Air Duct Perimeter, m
+    Ad=d*w % Air Duct Area, m^2
+    Pd=2*d+2*w % Air Duct Perimeter, m
    
     %Determining Saturation Vapor Pressure, Psv
     A= 1.2378847E-05; %Empirical Coefficient, 1/K^2
