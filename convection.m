@@ -110,17 +110,17 @@ function hc = convection(P,T,h,Vw,Amb,Ap)
     function Nusselt= forced(Re,Pr)
 
         if Re<20000
-        Nusselt= disp('invalid')
+            Nusselt= disp('invalid');
         elseif Re<=90000
-            Nusselt=0.86*Re^0.5*Pr^(1/3)
+            Nusselt=0.86*Re^0.5*Pr^(1/3);
         else Re>90000
-            Nusselt=disp('invalid')
+            Nusselt=disp('invalid');
         end 
     end 
 
     %Mixed Convection Function
-    function Nusselt=mixed(forced,free);
-    Nusselt=(forced(Ra))^3+(free(Re,Pr))^3)^(1/3); 
+    function Nusselt=mixed(forced,free)
+        Nusselt=(forced(Ra))^3+(free(Re,Pr))^3)^(1/3); 
     end 
 
     
