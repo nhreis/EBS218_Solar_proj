@@ -1,6 +1,11 @@
 
+<<<<<<< HEAD
 function hc = convection(P,T,h,Vw,d,w,Amb,Ap)
 
+=======
+function hc = convection(P,T,h,Vw,Amb,Ap)
+ 
+>>>>>>> origin/master
     %Inputs 
    %P,Initial air pressure, Pa
    %T,Initial air temperature, K
