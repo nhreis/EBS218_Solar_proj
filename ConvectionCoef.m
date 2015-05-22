@@ -1,4 +1,4 @@
-function hc = ConvectionCoef(FlowRate, MeanT_air)
+function [hcpf,hcbf] = ConvectionCoef(FlowRate, MeanT_air)
 w=0.33 % Pre-set collector width 0.33(m) for one dimensional model
 d=0.012 %air duct height (m)
 dh=2*d;
