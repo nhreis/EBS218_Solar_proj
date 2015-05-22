@@ -2,6 +2,12 @@
 
 %% Define Objects (Structs) to be passed to functions
 global Collect Ap Cp Wall Ply Foam Amb
+data= csv2struct('test1.xls');
+
+for k=1:length(data);
+
+
+
 %Collector variables
 Collect.tilt = 15;   %Tile angle of the collector, degrees
 Collect.Az   =0;    %Azimuth angle of collector, degrees
@@ -11,9 +17,8 @@ Collect.incident = 15; %Solar Incidence angle on collector, degrees
 Collect.mDot = 0.04;  %Mass flow rate of air through collector, kg/s
 
 %Aluminum Absorber Plate
-Ap.T = 100;  %Temperature, Degrees C
 Ap.A = 1;    %Area, m^2
-Ap.thick = .00124; %Thickness of plate, m (18 gauge)
+Ap.thick = .0015875; %Thickness of plate, m (18 gauge)
 Ap.alpha = 0.98;    %Absorbptivity of black paint (0< alpha < 1) [Incropera & DeWitt 6th ed, pg 956]
 Ap.epsilon = 0.98;  %Emissivity of black paint, [Incropera & DeWitt 6th ed, pg 956]
 Ap.C = 904;        %Specific heat, J/kgK [WolframAlpha]
@@ -22,12 +27,12 @@ Ap.k = 235;     %Thermal Conductivity of Al, W/(m K)  [WolframAlpha]
 Ap.W = 1;       %Width of collector, m
 
 %Acrylic Cover Plate
-Cp.T = 50;    %Temperature, C
+Cp.T = 50;    %Temperature, C   =====this is a guess====
 Cp.A = 1;     %Area, m^2
 Cp.thick = 0.00635;  %1/4" thick plate, m.
-Cp.alpha = 0.05;    %Absorbptance  ===THIS IS A GUESS===
-Cp.relect = 0.05;   %Reflectivity  ===ALSO A GUESS===  
+Cp.alpha = 0.0;    %Absorbptance  ===THIS IS A GUESS===
 Cp.tau = 0.894;     %Lecture 9, Slide 4
+Cp.relect = 1-Cp.tau;   %Reflectivity  ===ALSO A GUESS===  
 Cp.C = 1470;       %Specific Heat, J/kgK
 Cp.k = 0.2;       %Thermal Conductivity, W/(m K)[WolframAlpha]
 Cp.rho = 1180;   %Density, kg/m^3 [WolframAlpha]
@@ -51,7 +56,7 @@ Wall.R = 4.375*0.176; %R-Value of plywood, Km^2/W http://coloradoenergy.org/proc
 %Plywood Base
 Ply.T = 20;   %Plywood base temp, 20C  *assumption*
 Ply.A = 1;    %Area of plywood base, m^2
-Ply.thick = 0.0127; %Thickness of plywood, m (.5in?) ===is this correct?===
+Ply.thick = 0.015872; %Thickness of plywood, m (5/8in)
 Ply.k = 0.125; %Thermal conductibity of plywood, W/(m K)
 Ply.R = 0.31*0.176;  %R-Value of Plywood, K m^2/W,  http://coloradoenergy.org/procorner/stuff/r-values.htm
 Ply.C = 2500;  % Specific heat plywood, J/kg K   http://www.ehow.co.uk/info_8534542_thermal-properties-plywood.html
@@ -61,21 +66,20 @@ Foam.T= 20;  %Foam temperature, C
 Foam.A = 1; %Foam area, m^2
 Foam.R=1.37;  %R-value of the foam, K m^2/W http://insulation.owenscorning.com/assets/0/428/429/431/fd144b72-c513-45e0-99d8-9ef16c90a65b.pdf
 Foam.thick = 0.0254; %thickness of foam, m  (1 in? is this right?)
-Foam.rho = 0;  %density of the foam ,kg/m^3 ======need value=====
+Foam.rho = 30;  %density of the foam ,kg/m^3 [measured]
 
 
 %Ambient conditions
 %Includes properties of air
-Amb.Tair = 30; %Ambient air temperature, C
-Amb.Tsky = 0;  %Sky Temperature ======need value/function for this!=========
-Amb.Gb = 800;  %Beam radiation on Pyronometer (parallel with collector), W/m^2
+Amb.Tair = data.Tair(k); %Ambient air temperature, C
+Amb.Gb = data.G(k);  %Beam radiation on Pyronometer (parallel with collector), W/m^2
 Amb.Gd = 5;    %Diffuse radiation on Pyronometer (parallel with collector), W/m^2
 Amb.Gr = 1;    %Reflected solar radiation on Collector, W/m^2
-Amb.wind = 3;  %Wind speed, m/s 
-Amb.windDir = 0; %Wind direction, compass degrees
-Amb.RH = 0.60; %Relative Humidity, %
+Amb.wind = data.wind(k);  %Wind speed, m/s 
+Amb.windDir = data.windDir(k); %Wind direction, compass degrees
+Amb.RH = data.RH(k); %Relative Humidity, %
 Amb.day = 140; %Day on which test was run, n^th day of the year
-Amb.t = 12*60;     %Time at which data point was taken, min since midnight
+Amb.t = data.t(k);     %Time at which data point was taken, min since midnight
 %These will be inputs from the model we did for HW, which should be
 %converted to a function.
 Amb.dec = 20;  %Solar declanation, degrees
@@ -98,3 +102,4 @@ Amb.nAir = 1;      %Index of refraction of air  [memoized, also Wikipedia agrees
 %of day
 [Amb.Zen , Amb.Az, Amb.SolAlt, Amb.dec, Amb.solT, Amb.hrAng, Collect.incident] = WhereIsSun([Collect.lat, Collect.lng], [Amb.day, Amb.t], Collect.tilt, Collect.Az);
 
+end
