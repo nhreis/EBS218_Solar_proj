@@ -47,16 +47,6 @@ else if cosd(SolZen)< sind(SolDec)/sind(pos(1))
     end
 end
 
-% x=['Solar Altitude Angle: ', num2str(SolAlt), ' deg'];
-% disp(x);
-% x=['Solar Azimuth Angle: ', num2str(SolAz), ' deg'];
-% disp(x);
-% x=['Solar Declination Angle: ', num2str(SolDec), ' deg'];
-% disp(x);
-% x=['Solar Zenith Angle: ', num2str(SolZen), ' deg'];
-% disp(x);
-% x=['Solar Time: ', num2str(solT/60), ' hours'];
-% disp(x);
 
 %%b) Find Direction to sun from any surface
 
