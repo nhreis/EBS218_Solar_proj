@@ -19,7 +19,6 @@ SolDec = 23.45*sind(360*(284+t(1))/365);
     
 solT = 4*(merid-pos(2))+ EoT + t(2);
 
-%Can use mod() to do this
 
 
 %Calculate hour angle
