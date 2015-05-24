@@ -89,11 +89,12 @@ function hc = convection(P,T,Ta,Tp,h,vw,d,w,delp)
     L2=Ad/Pd; %2nd Characteristic Length of the Duct
     Ra=g*Beta*(Tp-Ta)*L2^3/(nu*alpha);
 
-    %Nusselt Number of Air
+    %Nusselt Number of Air (equations from Lecture 7, EBS 218, Hsieh's
+    %method)
     if Re>2100
-        Nusselt=0.0158*Re^0.8
+        Nusselt=0.0158*Re^0.8;
     else 
-        Nusselt= 4.9+(0.0606*(Re*Pr*L2/L1)^0.5)/(1+0.0909*(Re*Pr*L2/L1)^0.7*Pr^0.17)
+        Nusselt= 4.9+(0.0606*(Re*Pr*L2/L1)^0.5)/(1+0.0909*(Re*Pr*L2/L1)^0.7*Pr^0.17);
     
     end 
     
