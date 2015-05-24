@@ -1,10 +1,10 @@
-function [hcpf,hcbf] = ConvectionCoef(FlowRate, MeanT_air)
+function hc = ConvectionCoef(FlowRate, T_air, dyn_vis, prf, akf)
 w=0.33 % Pre-set collector width 0.33(m) for one dimensional model
 d=0.012 %air duct height (m)
 dh=2*d;
 l=3; %Collector length for one dimension (m)
-%get air property values from curve fits of data tables
-[denf,therm_diff,dyn_vis,kin_vis,akf,cpf,prf]=fluid_props_air(MeanT_air);
+
+
 % Reynolds number in duct (see example 3.14.2, p173 d&b)
 Re=2*FlowRate/(w*dyn_vis);
 if(Re<2100)
