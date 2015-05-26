@@ -58,7 +58,7 @@ for time=dt:dt:Tstop
     %Fin
     FinThickness = Ap.thick;
     Ac = FinThickness * dx;
-    P = 2*DuctWidth + 2*FinThickness;
+    P = 2w + 2t;
     m=(hcpf * P / ( Ap.k * Ac) )^(1/2)
     qcoef=(hcpf * P * Ap.k * Ac )^(1/2) * tand( m * DuctHeight );
     
@@ -68,7 +68,7 @@ for time=dt:dt:Tstop
     
     for i=2:Nseg
         
-        if (dx*i <=0.67) || (dx*i>=1.67&&dx*i<=2)||(dx*i>=2.33) % One side fin
+        if (dx*i <=0.67) || (dx*i>=1 && dx*i<=1.33)||(dx*i>=2.33) % One side fin
             % Update plate temperature
             tp(i,k+1)= tp(i,k) + c1p * ( SolarEnergy + c2p * ( tp(i+1,k) - 2 .* tp(i,k)...
                 + tp(i-1,k) ) - hcpf * ( tp(i,k) - t(i,k) ) - hrpb * ( tp(i,k)...
@@ -85,7 +85,7 @@ for time=dt:dt:Tstop
                 + qcoef * ( tp(i,k) - t(i,k) ) ) /(hcpf+hcbf+cair);
             
             
-        elseif (dx*i>=2&&dx*i<=2.33) % Two side fin
+        elseif (dx*i>=1.33&&dx*i<=1.67) % Two side fin
             % Update plate temperature
             tp(i,k+1)= tp(i,k) + c1p * ( SolarEnergy + c2p * ( tp(i+1,k) - 2 .* tp(i,k)...
                 + tp(i-1,k) ) - hcpf * ( tp(i,k) - t(i,k) ) - hrpb * ( tp(i,k)...
@@ -129,6 +129,7 @@ for time=dt:dt:Tstop
     
     % useful heat and efficiency
     qu(k) = FlowRate * Air.C * ( t(Nseg+1,k)-t(1,k));
-    eff=100.*qu/(Gt*Ap.A);
+    eff(k)=100.*qu(k)/(Gt*Ap.A);
     
 end % of time loop
+
