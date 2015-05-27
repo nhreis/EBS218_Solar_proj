@@ -2,6 +2,9 @@ function [Gb, Gd] = irradianceFunc(time)
 % Given a clock time, irradianceFunc goes through the data for a specific
 % day to give the beam radiation (Gb) and diffuse radiation (Gd) for that
 % hour
+
+global Amb
+
 hour = floor(time);
 
 % constants
@@ -38,11 +41,12 @@ G_b = G_horz - G_d; % beam radiation on horizontal surface
 G_T = G_b*(cos(theta)/cos(theta_z))+G_d*((1+cos(180-tilt))/2)...
       +G_horz*rho_g*((1-cos(180-tilt))/2);  % irradiance on solar collector
 G_T = cat(2,time',G_T); % irradiance vs. time
- 
 
 Gb = G_b(hour);
 Gd = G_d(hour);
 
+Amb.Gb = Gb;
+Amb.Gd = Gd;
 
 end
 
