@@ -64,10 +64,10 @@ function hc = convection(P,T,Ta,Tp,h,v,d,w,delp)
     nu=mu/rho_air; % m2/s, Lecture 5, EBS 218
 
     %Characteristic Length of , L
-    L=4*Ad/Pd; %Lecture 5, EBS 218
+    L1=4*Ad/Pd; %Lecture 5, EBS 218
 
     %Reynolds Number of Air, Re
-    Re=v*L/nu; %Lecture 5, EBS 218
+    Re=v*L1/nu; %Lecture 5, EBS 218
 
     %Volumetric Coefficient of Expansion of Air, Beta
     Beta=1/T; %1/K, Lecture 5, EBS 218
