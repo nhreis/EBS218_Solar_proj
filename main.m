@@ -14,7 +14,8 @@ c1p=dt/(Ap.thick * Ap.C * Ap.rho);
 c2p=Ap.k * Ap.thick/(dx * dx);
 
 %For insulation plate
-
+c3=dt/(Bp_thick * Bp.C * Bp.rho);
+c4=Bp.k * Bp.thick/(dx*dx);
 
 
 
@@ -58,7 +59,7 @@ for time=dt:dt:Tstop
     %Fin
     FinThickness = Ap.thick;
     Ac = FinThickness * dx;
-    P = 2w + 2t;
+    P = 2*dx + 2*FinThickness;
     m=(hcpf * P / ( Ap.k * Ac) )^(1/2)
     qcoef=(hcpf * P * Ap.k * Ac )^(1/2) * tand( m * DuctHeight );
     
