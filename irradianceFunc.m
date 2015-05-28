@@ -1,9 +1,7 @@
-function [Gb, Gd] = irradianceFunc(time)
+function [Gb, Gd, airT] = irradianceFunc(time)
 % Given a clock time, irradianceFunc goes through the data for a specific
 % day to give the beam radiation (Gb) and diffuse radiation (Gd) for that
 % hour
-
-global Amb
 
 hour = floor(time);
 
@@ -18,6 +16,7 @@ gamma = 0;  % surface azimuth angle (zero due south)
 davis = csvread('Solar2014csv.csv');    % reads data from CSV file
 Gt_vert = davis(3456:3479,10);  % south vertical pyranometer (W/m2)
 G_horz = davis(3456:3479,7);    % horizontal pyranometer (W/m2)
+air_Temp = davis(3456:3479,4);  % air temp (deg C)
 day = davis(3456,2);    % day of year
 
 
@@ -44,9 +43,7 @@ G_T = cat(2,time',G_T); % irradiance vs. time
 
 Gb = G_b(hour);
 Gd = G_d(hour);
-
-Amb.Gb = Gb;
-Amb.Gd = Gd;
+airT = air_Temp(hour);
 
 end
 
