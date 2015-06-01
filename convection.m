@@ -1,18 +1,7 @@
 
-function hc = convection(P,T,Ta,Tp,h,vw,d,w,delp) 
-    %Inputs 
-    
-   P=101350; %Initial air pressure, Pa
-   T=300; %Initial air temperature, K
-   Ta=300; %Ambient Air temperature, K
-   Tp=320; %Initial plate temperature, K
-   h=0.6; %Initial Relative Humidity of Air
-   v= 40; %Air Speed, m/s
-   delp=0.001; %Plate Thickness, m
-   d= 0.012; %air duct height, m
-   w=1; % air duct width, m
+   function hc= convection(P,T,Ta,Tp,h,v,delp,d,w)
 
-   %Measuring Perimeters and Areas
+     %Measuring Perimeters and Areas
     Ad=d*w; % Air Duct Area, m^2
     Pd=2*d+2*w; % Air Duct Perimeter, m
    
@@ -62,8 +51,9 @@ function hc = convection(P,T,Ta,Tp,h,vw,d,w,delp)
     mu=(b*T^1.5)/(T+S); % (kg/m-s), http://www-mdp.eng.cam.ac.uk/web/library/enginfo/aerothermal_dvd_only/aero/fprops/propsoffluids/node5.html
     nu=mu/rho_air; % m2/s, Lecture 5, EBS 218
 
-    %Characteristic Length of , L
+    %1st and 2nd Characteristic Lengths of , L1 and L2
     L1=4*Ad/Pd; %Lecture 5, EBS 218
+    L2= Ad/Pd; % Lecture 5, EBS 218
 
     %Reynolds Number of Air, Re
     Re=v*L1/nu; %Lecture 5, EBS 218
@@ -85,64 +75,18 @@ function hc = convection(P,T,Ta,Tp,h,vw,d,w,delp)
     g=9.807; %gravitational constant, m/s2
     Gr=g*Beta*(Tp-Ta)*L1^3/nu^2; 
 
-    %Rayleigh Number of the Air (Lecture 5, EBS 218)
-    L2=Ad/Pd; %2nd Characteristic Length of the Duct
-    Ra=g*Beta*(Tp-Ta)*L2^3/(nu*alpha)
-
-    %Do we have free, forced, or mixed convection?
-    if Gr/Re^2 <0.5
-       Nusselt= forced(Re,Pr);
-    elseif Gr/Re^2 <=5 
-        Nusselt=mixed(forced,free);
-    else %Gr/Re^2 >5;
-        Nusselt=free(Ra);
+    %Nusselt Number of Air (equations from Lecture 7, EBS 218, Hsieh's
+    %method)
+    if Re>2100
+        Nusselt=0.0158*Re^0.8;
+    else 
+        Nusselt= 4.9+(0.0606*(Re*Pr*L2/L1)^0.5)/(1+0.0909*(Re*Pr*L2/L1)^0.7*Pr^0.17);
+    
     end 
-
-    %Free Convection Function
-    function Nusselt= free(Ra)
-
-    %Calculating the Nusselt Number
-        if Ra<=10000
-            error('The provided equations are invalid if Ra>10000');
-            warning('The provided equations are invalid if Ra <10000');
-            Nusselt = -1;
-        elseif Ra<=10^7
-            Nusselt= 0.54*Ra^0.25
-        elseif Ra<=10^10
-            Nusselt= 0.15*Ra^(1/3)
-        else Ra>10^10
-            warning('The provided equations are invalid if Ra>10000');
-        end 
-    end 
-
-    %Forced Convection Function (Lecture 5, EBS 218)
-    function Nusselt= forced(Re,Pr)
-
-        if Re<20000
-            error('The provided equations are invalid if Re>20000');
-            Nusselt= -1;
-        elseif Re<=90000
-            Nusselt=0.86*Re^0.5*Pr^(1/3);
-        else Re>90000
-             warning('The provided equations are invalid if Re>90000')
-        end 
-    end 
-
-    %Mixed Convection Function
-    function Nusselt=mixed(forced,free)
-        Nusselt=(forced(Ra))^3+(free(Re,Pr)^3)^(1/3); 
-    end 
-
-        
-    %Calculating the Convective Heat Transfer Coefficient (Lecture 5, EBS
-    %218)
-    hc= Nusselt*kappa/L
+    
+    %Convective Heat Transfer Coefficient, W/m2*K (Lecture 5, EBS 218)
+    hc= Nusselt*kappa/L1
 end
-    
-    
-
-
-
 
 
 
