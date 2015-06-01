@@ -1,3 +1,4 @@
+Variables
 % Matlab program to solve transient flat-plate air heater model
 % Solves equations from ebs 218 lecture notes using explicit finite
 % difference method.
