@@ -2,9 +2,7 @@
 
 %% Define Objects (Structs) to be passed to functions
 global Collect Ap Cp Wall Ply Foam Amb
-data= csv2struct('test1.xls');
 
-for k=1:length(data);
 
 
 
@@ -20,7 +18,7 @@ Collect.mDot = 0.04;  %Mass flow rate of air through collector, kg/s
 Ap.A = 1;    %Area, m^2
 Ap.thick = .0015875; %Thickness of plate, m (18 gauge)
 Ap.alpha = 0.98;    %Absorbptivity of black paint (0< alpha < 1) [Incropera & DeWitt 6th ed, pg 956]
-Ap.epsilon = 0.98;  %Emissivity of black paint, [Incropera & DeWitt 6th ed, pg 956]
+Ap.epsilon = 0.95;  %Emissivity of black paint, [Incropera & DeWitt 6th ed, pg 956]
 Ap.C = 904;        %Specific heat, J/kgK [WolframAlpha]
 Ap.rho = 2700;    %Density Aluminum, kg/m^3 [WolframAlpha]
 Ap.k = 235;     %Thermal Conductivity of Al, W/(m K)  [WolframAlpha]
@@ -36,7 +34,7 @@ Cp.relect = 1-Cp.tau;   %Reflectivity  ===ALSO A GUESS===
 Cp.C = 1470;       %Specific Heat, J/kgK
 Cp.k = 0.2;       %Thermal Conductivity, W/(m K)[WolframAlpha]
 Cp.rho = 1180;   %Density, kg/m^3 [WolframAlpha]
-Cp.epsilon = 0;  %Emissivity of acrylic =====NEED VALUE=====
+Cp.epsilon = 0.94;  %Emissivity of acrylic =====NEED VALUE=====
 Cp.n = 1.49;    %Index of refraction of Acrylic [http://en.wikipedia.org/wiki/List_of_refractive_indices]
 Cp.kextinct =0; %Coefficient of extinction   [http://www.filmetrics.com/refractive-index-database/Acrylic/Acrylate-Lucite-Plexiglass]
 
@@ -71,15 +69,15 @@ Foam.rho = 30;  %density of the foam ,kg/m^3 [measured]
 
 %Ambient conditions
 %Includes properties of air
-Amb.Tair = data.Tair(k); %Ambient air temperature, C
-Amb.Gb = data.G(k);  %Beam radiation on Pyronometer (parallel with collector), W/m^2
+Amb.Tair = 20; %Ambient air temperature, C
+Amb.Gb = 10;  %Beam radiation on Pyronometer (parallel with collector), W/m^2
 Amb.Gd = 5;    %Diffuse radiation on Pyronometer (parallel with collector), W/m^2
 Amb.Gr = 1;    %Reflected solar radiation on Collector, W/m^2
-Amb.wind = data.wind(k);  %Wind speed, m/s 
-Amb.windDir = data.windDir(k); %Wind direction, compass degrees
-Amb.RH = data.RH(k); %Relative Humidity, %
+Amb.wind = 3;  %Wind speed, m/s 
+Amb.windDir = 3; %Wind direction, compass degrees
+Amb.RH = 0.6; %Relative Humidity, %
 Amb.day = 140; %Day on which test was run, n^th day of the year
-Amb.t = data.t(k);     %Time at which data point was taken, min since midnight
+Amb.t = 1;     %Time at which data point was taken, min since midnight
 %These will be inputs from the model we did for HW, which should be
 %converted to a function.
 Amb.dec = 20;  %Solar declanation, degrees
@@ -95,11 +93,3 @@ Amb.SolT = 0;       %Solar time
 Amb.SolAlt =0;      %Solar Altitude Angle, degrees
 Amb.nAir = 1;      %Index of refraction of air  [memoized, also Wikipedia agrees with me.]
                         %Yes, it's temperature (density, actually) dependent, but I don't care that much.
-
-
-%% Set values to locate the sun based on time of day, tilt of collector, direction of collector.
-%Also finds solar incident angle on collector based on tilt angle and time
-%of day
-[Amb.Zen , Amb.Az, Amb.SolAlt, Amb.dec, Amb.solT, Amb.hrAng, Collect.incident] = WhereIsSun([Collect.lat, Collect.lng], [Amb.day, Amb.t], Collect.tilt, Collect.Az);
-
-end
