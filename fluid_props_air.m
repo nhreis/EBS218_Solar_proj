@@ -1,8 +1,5 @@
 function [den,therm_diff,dyn_vis,kin_vis,therm_con,cp,Pr]=fluid_props_air(Tk)
 % Matlab function to evaluate properties of air at one atmosphere
-% Data taken from Table A-11, page 961 of Cengel, Y.A.  1998.
-% Heat Transfer: A Practical Approach.  WCB McGraw-Hill, Boston.
-% Temerpature range of data extracted from Table is from 200 to 400 K
 % Curve fits done in Matlab script: air_props_fit.m, using Matlab Polyfit.
 % Tk = temperature (K)
 % den = density (kg/m3)
