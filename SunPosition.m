@@ -1,8 +1,6 @@
-function [ SolZen , SolAz, SolAlt, SolDec, solT, hrAng, indAng ] = SunPosition( pos, solT, SolDec, tilt, SurAz )
+function [ SolZen , SolAz, SolAlt, hrAng, indAng ] = SunPosition( pos, solT, SolDec, tilt, SurAz )
 %Input formats for position and time
 %pos = [0, 0]; %position of Earth's surface in [deg Latitude, deg Longitude]
-%t = [0,0]; % time in [day of year (of 365), mintues (standard clock time)]
-
 
 
 %Calculate hour angle
@@ -38,8 +36,6 @@ indAng = sind(SolDec)*sind(pos(1))*cosd(tilt) - sind(SolDec)*cosd(pos(1))*sind(t
 %indAng = cosd(SolZen)*cosd(tilt)+sind(SolAz)*sind(tilt)*cosd(SolAz-SurAz);
 %The simplified expression.
 indAng = acosd(indAng);
-
-
 
 
 end
