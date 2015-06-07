@@ -1,10 +1,16 @@
-function Solar = Transimission(Gb,Gd,tilt,Theta)
+function Solar = Transimission(Gb,Gd,tilt,Theta,Zen)
     %Calculates and returns radiative heat transfers for component of struct/objects(?) in Watts.
     
 %% Incoming Solar Radiation
 sigma = 5.6697e-8;  %Boltzmann constant as defined in Textbook
 %Transmittance of Acrylic cover
-Rb  = 1.71;    %Geometric ratio ======GUESS FROM NOTES======
+if Theta>90
+    Theta=90;
+end
+if Zen>85
+    Zen=85;
+end
+Rb  = cosd(Theta)/cosd(Zen);    %Geometric ratio ======GUESS FROM NOTES======
 rhog = 0.2;  %Diffuse reflectance off ground
 n1 = 1;     %refractive index of air
 n2 = 1.49;  %refractive index of acrylic cover
@@ -28,4 +34,4 @@ for i = 1:length(ThetaVec)
     TauAlpha{i} = 1.01.*tau.*alpha;
 end
 G = Gb +Gd;
-Solar = Gb*Rb.*TauAlpha{1} + Gd.*TauAlpha{2}.*((1+cosd(tilt))/2) + G*rhog.*TauAlpha{3}.*((1-cosd(tilt)/2));
+Solar = Gb*Rb.*TauAlpha{1} + Gd.*TauAlpha{2}.*((1+cosd(tilt))/2); %+ G*rhog.*TauAlpha{3}.*((1-cosd(tilt)/2));
