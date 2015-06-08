@@ -183,7 +183,7 @@ for tyme=dt:dt:tstop
     
     if(re<2100)
         % laminar flow  convective heat transfer coefficient (eqn 3.14.7, p172, d&b)
-        fac=re*prf*dh/DuctLength;
+        fac=re*prf*dh*20/DuctLength;
         anud=4.9 + .0606*fac^1.2/(1+0.0909*(fac^0.7)*(prf^0.17));
     else
         % turbulent convective heat transfer coefficient (eqn 3.14.6, p171, d&b)
